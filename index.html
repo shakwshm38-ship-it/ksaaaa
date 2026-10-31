@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>هدية إلكترونية لـ شوشو حبيبة القلب 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: #fdeef3;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #333;
+      position: relative;
+    }
+
+    /* Floating Background Elements */
+    .bg-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .floating-item {
+      position: absolute;
+      bottom: -50px;
+      font-size: 20px;
+      opacity: 0.6;
+      animation: floatBg 8s linear infinite;
+    }
+
+    @keyframes floatBg {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      20% { opacity: 0.7; }
+      80% { opacity: 0.7; }
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* PHASE 1: Gift Screen */
+    .gift-screen {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+      background: #fdeef3;
+    }
+
+    .gift-header-badge {
+      background: #ffffff;
+      border: 1px solid #ffccd8;
+      border-radius: 50px;
+      padding: 10px 24px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #e63963;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 15px rgba(230, 57, 99, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gift-wrapper {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    /* Box Base */
+    .gift-body {
+      width: 220px;
+      height: 155px;
+      background: linear-gradient(145deg, #e34d70, #c83558);
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 0 15px 30px rgba(200, 53, 88, 0.3);
+      z-index: 2;
+    }
+
+    /* Vertical Ribbon Base */
+    .ribbon-v {
+      position: absolute;
+      width: 46px;
+      height: 100%;
+      background: #ffffff;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      transition: all 1s ease;
+    }
+
+    /* Gift Lid */
+    .gift-lid {
+      width: 236px;
+      height: 44px;
+      background: linear-gradient(145deg, #eb5e7f, #d24264);
+      border-radius: 14px;
+      position: absolute;
+      top: 42px;
+      left: 2px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      z-index: 5;
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
+    }
+
+    .lid-ribbon {
+      position: absolute;
+      width: 46px;
+      height: 100%;
+      background: #ffffff;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: all 1s ease;
+    }
+
+    /* Bow Knot top */
+    .bow-container {
+      position: absolute;
+      top: -34px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 36px;
+      z-index: 6;
+      transition: all 1s ease;
+    }
+
+    .bow-left, .bow-right {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border: 9px solid #ffffff;
+      border-radius: 50% 50% 0 50%;
+      top: 0;
+    }
+
+    .bow-left { left: 0; transform: rotate(-25deg); }
+    .bow-right { right: 0; transform: scaleX(-1) rotate(-25deg); }
+
+    /* Gift Prompt Arrow */
+    .gift-prompt {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: #e63963;
+      font-weight: 700;
+      font-size: 1.2rem;
+      animation: pulse 1.6s infinite;
+    }
+
+    .arrow {
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-bottom: 14px solid #e63963;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateY(0); opacity: 0.9; }
+      50% { transform: translateY(-8px); opacity: 1; }
+    }
+
+    /* Opening Animations */
+    .gift-wrapper.opened .ribbon-v,
+    .gift-wrapper.opened .lid-ribbon,
+    .gift-wrapper.opened .bow-container {
+      transform: translateY(180px) rotate(15deg);
+      opacity: 0.2;
+    }
+
+    .gift-wrapper.opened .gift-lid {
+      transform: translateY(-90px) rotate(40deg) scale(0.9);
+      opacity: 0.85;
+    }
+
+    /* Massive Balloons Effect */
+    .balloon-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99;
+      overflow: hidden;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+      animation: floatUp linear forwards;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 14px;
+      background: rgba(0,0,0,0.15);
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-140vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* PHASE 2: Main Letter Content */
+    .content-screen {
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease;
+      padding: 30px 15px 60px 15px;
+      max-width: 580px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .letter-paper {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 40px 28px;
+      box-shadow: 0 10px 35px rgba(230, 57, 99, 0.08);
+      border: 1px solid #ffe3ec;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .letter-paper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, #ff4d79, #e63963, #ff80bf);
+    }
+
+    .top-badge {
+      background: #fff0f5;
+      border: 1px solid #ffd1dc;
+      border-radius: 50px;
+      padding: 8px 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #e63963;
+      margin-bottom: 25px;
+    }
+
+    .letter-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #e63963;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .letter-subtitle {
+      font-size: 0.9rem;
+      color: #ff6685;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    .divider-line {
+      height: 1px;
+      background: #ffe3ec;
+      margin: 25px 0;
+      width: 100%;
+    }
+
+    .text-highlight {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #e63963;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .text-paragraph {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #2c2c2c;
+      line-height: 2;
+      margin-bottom: 25px;
+    }
+
+    .quote-box {
+      background: #fff0f4;
+      border: 1px solid #ffccd8;
+      border-radius: 18px;
+      padding: 20px 16px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #e63963;
+      line-height: 1.6;
+      margin: 30px 0;
+    }
+
+    .final-highlight {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #e63963;
+      margin: 30px 0 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .footer-note {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ff80bf;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Elements -->
+  <div class="bg-elements" id="bgElements"></div>
+
+  <!-- PHASE 1: Gift Screen -->
+  <div class="gift-screen" id="giftScreen">
+    <div class="gift-header-badge">
+      هدية إلكترونية لـ شوشو حبيبة القلب 💖
+    </div>
+
+    <div class="gift-wrapper" id="giftBox">
+      <div class="gift-lid">
+        <div class="lid-ribbon"></div>
+        <div class="bow-container">
+          <div class="bow-left"></div>
+          <div class="bow-right"></div>
+        </div>
+      </div>
+      <div class="gift-body">
+        <div class="ribbon-v"></div>
+      </div>
+    </div>
+
+    <div class="gift-prompt">
+      <div class="arrow"></div>
+      <div>اضغط للفتح</div>
+    </div>
+  </div>
+
+  <!-- PHASE 2: Main Letter Content -->
+  <div class="content-screen" id="contentScreen">
+    <div class="top-badge" style="margin: 0 auto 20px auto; display: table;">
+      هدية إلكترونية لـ شوشو حبيبة القلب 💖
+    </div>
+
+    <div class="letter-paper">
+      <div style="font-size: 1.8rem; margin-bottom: 6px;">💖</div>
+      <div class="letter-title">إلى شوشو... حبيبة القلب وأجمل أقداري ✨</div>
+      <div class="letter-subtitle">رسالة حب وعشق خاصة لكِ من أعماق الروح</div>
+      
+      <div class="divider-line"></div>
+
+      <div class="text-highlight">
+        أحبكِ صدق وربي إنكِ أجمل قدر، وأحلى هدية من ربي لقلبي وحياتي.
+      </div>
+
+      <div class="text-paragraph">
+        أنتِ مو إنسانة عادية، أنتِ شيء مختلف، شيء ما يتكرر ولا يوجد منه ثاني. كأنكِ معجزة نزلت لي من السماء عشان تخلي ابتسامتي تعود وتشرق من جديد...
+      </div>
+
+      <div class="text-paragraph">
+        وربي إن كل أحلامي اللي تمنيتها، وكل الأمنيات اللي كانت عالقة بقلبي تحققت فيكِ. أحبكِ بكل تفاصيلكِ، وما أقدر أوصفكِ بحروف أو كلمات، حبكِ أكبر من كل الشوق وأنا معكِ!
+      </div>
+
+      <div class="text-paragraph">
+        أحبكِ لين أوصل لمرحلة إنكِ مو بس شخص في حياتي، إنكِ حياة كاملة وروح أتنفسها. أقسم بربي إنكِ أجمل من القمر والنجوم، وإنكِ النور الوحيد اللي يضوي عتمة أيامي وسنيين عمري.
+      </div>
+
+      <div class="quote-box">
+        ✨ "وأنتِ الصوت اللي يرد لي ضحكتي، أحبكِ وأشوفكِ أجمل إنسانة بكل شيء" ✨
+      </div>
+
+      <div class="text-paragraph">
+        وما فيه شخص ينبض له قلبي ولا تشوف عيني الحلا إلا فيكِ، ولا أعرف معنى للراحة والأمان والسلام إلا وأنتِ معي وبجانبي.
+      </div>
+
+      <div class="text-paragraph">
+        أحب كل تفاصيلكِ الصغيرة والكبيرة، صوتكِ، بحتكِ، ضحكتكِ الخلابة... كلامكِ معي يخليني أسمع دقات قلبي تنبض بالحياة من جديد.
+      </div>
+
+      <div class="divider-line"></div>
+
+      <div class="final-highlight">
+        دمتِ لي أجمل قدر، وأعذب حكاية، وأحلى ختام 💖
+      </div>
+
+      <div class="divider-line"></div>
+
+      <div class="footer-note">
+        صُنعت لكِ بكل حب وشغف 💖
+      </div>
+    </div>
+  </div>
+
+  <!-- Balloon Layer -->
+  <div class="balloon-layer" id="balloonLayer"></div>
+
+  <script>
+    // Create floating background elements
+    const bgElements = document.getElementById('bgElements');
+    const bgIcons = ['🌸', '💖', '✨', '🌷', '💕', '🌺'];
+    for (let i = 0; i < 25; i++) {
+      const item = document.createElement('div');
+      item.classList.add('floating-item');
+      item.innerText = bgIcons[Math.floor(Math.random() * bgIcons.length)];
+      item.style.left = Math.random() * 100 + '%';
+      item.style.animationDuration = (Math.random() * 5 + 6) + 's';
+      item.style.animationDelay = (Math.random() * 5) + 's';
+      bgElements.appendChild(item);
+    }
+
+    const giftBox = document.getElementById('giftBox');
+    const giftScreen = document.getElementById('giftScreen');
+    const contentScreen = document.getElementById('contentScreen');
+    const balloonLayer = document.getElementById('balloonLayer');
+
+    const colors = ['#ff4d79', '#ff80bf', '#ff9999', '#ffcc00', '#33ccff', '#b366ff', '#ff6666'];
+
+    giftBox.addEventListener('click', () => {
+      // Step 1: Open gift animation
+      giftBox.classList.add('opened');
+
+      // Step 2: Burst Balloons
+      setTimeout(() => {
+        createBalloons(85);
+      }, 350);
+
+      // Step 3: Transition & Smooth Scroll
+      setTimeout(() => {
+        giftScreen.style.display = 'none';
+        contentScreen.style.display = 'block';
+        
+        setTimeout(() => {
+          contentScreen.style.opacity = '1';
+          
+          // Fast Scroll from bottom to top
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 150);
+        }, 50);
+
+      }, 1300);
+    });
+
+    function createBalloons(count) {
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const balloon = document.createElement('div');
+          balloon.classList.add('balloon');
+          
+          const size = Math.floor(Math.random() * 35) + 35;
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const left = Math.random() * 100;
+          const duration = Math.random() * 3 + 3.5;
+
+          balloon.style.width = size + 'px';
+          balloon.style.height = (size * 1.25) + 'px';
+          balloon.style.backgroundColor = color;
+          balloon.style.left = left + '%';
+          balloon.style.animationDuration = duration + 's';
+
+          balloonLayer.appendChild(balloon);
+
+          setTimeout(() => {
+            balloon.remove();
+          }, duration * 1000);
+        }, i * 40);
+      }
+    }
+  </script>
+</body>
+</html>
